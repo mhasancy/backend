@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
-import express from "express";
-import cors from "cors";
-import twilio from "twilio";
-
+const express = require("express");
+const cors = require("cors");
+const dotenv = require('dotenv');
+const AccessToken = require('twilio').jwt.AccessToken;
 dotenv.config();
 
 const port = process.env.PORT || 5000;
@@ -18,7 +17,7 @@ const options = {
 app.use(cors(options));
 
 const getToken = (request, response) => {
-  const AccessToken = twilio.jwt.AccessToken;
+
   const VideoGrant = AccessToken.VideoGrant;
 
   // Get the user's identity and roomSid from the query.
