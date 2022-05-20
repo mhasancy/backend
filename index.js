@@ -1,5 +1,5 @@
-import * as dotenv from "dotenv";
-import express, { Request, Response } from "express";
+import dotenv from "dotenv";
+import express from "express";
 import cors from "cors";
 import twilio from "twilio";
 
@@ -11,13 +11,13 @@ const allowedOrigins = "*";
 const app = express();
 app.use(express.json());
 
-const options: cors.CorsOptions = {
+const options = {
   origin: allowedOrigins,
 };
 
 app.use(cors(options));
 
-const getToken = (request: Request, response: Response) => {
+const getToken = (request, response) => {
   const AccessToken = twilio.jwt.AccessToken;
   const VideoGrant = AccessToken.VideoGrant;
 
@@ -29,24 +29,22 @@ const getToken = (request: Request, response: Response) => {
   // const roomSid = "cool-room";
   // Create the access token.
   const token = new AccessToken(
-    process.env.TWILIO_ACCOUNT_SID as string,
-    process.env.TWILIO_API_KEY as string,
-    process.env.TWILIO_API_SECRET as string,
-    { identity: identity as string }
+    process.env.TWILIO_ACCOUNT_SID,
+    process.env.TWILIO_API_KEY,
+    process.env.TWILIO_API_SECRET,
+    { identity: identity }
   );
 
   token.identity = identity;
 
   // Add a VideoGrant to the token to allow the user of this token to use Twilio Video
-  const grant = new VideoGrant({ room: roomSid as string });
+  const grant = new VideoGrant({ room: roomSid  });
   token.addGrant(grant);
 
   response.send({
     accessToken: token.toJwt(),
   });
-  console.log({
-    accessToken: token.toJwt(),
-  });
+
 };
 
 app.post("/token", getToken);
