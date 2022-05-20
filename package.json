@@ -7,7 +7,9 @@
     "start": "twilio-run",
     "deploy": "twilio-run deploy"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dot-env": "^0.0.1"
+  },
   "devDependencies": {
     "twilio-run": "^3.4.2"
   }
